@@ -1,0 +1,443 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+    margin: 0;
+    font-family: 'Maven Pro', sans-serif;
+    color: #999;
+    border-radius: 0;
+}
+
+/* Main Div Style */
+#main {
+    max-width: 940px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+/* Navigation Style */
+/* Main Div Style */
+#main {
+    max-width: 940px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+/* Navigation Style */
+nav {
+    max-width: 940px;
+    min-width: 275px;
+    margin: 0 auto;
+    font-size: 84%;
+    background: #070707;
+    background: -moz-linear-gradient(top, #262626 0%, #070707 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #262626), color-stop(100%, #070707));
+    background: -webkit-linear-gradient(top, #262626 0%, #070707 100%);
+    background: -o-linear-gradient(top, #262626 0%, #070707 100%);
+    background: -ms-linear-gradient(top, #262626 0%, #070707 100%);
+    background: linear-gradient(to bottom, #262626 0%, #070707 100%);
+    border: 0px solid #fff;
+}
+
+#navList{
+   padding: 0;
+    background: #999;
+    font-size: 98%;
+    margin: 0;
+}
+#navList li a:hover {
+   background: #070707;
+    background: -moz-linear-gradient(top, #262626 0%, #070707 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #262626), color-stop(100%, #070707));
+    background: -webkit-linear-gradient(top, #262626 0%, #070707 100%);
+    background: -o-linear-gradient(top, #262626 0%, #070707 100%);
+    background: -ms-linear-gradient(top, #262626 0%, #070707 100%);
+    background: linear-gradient(to bottom, #262626 0%, #070707 100%);
+}
+#navList li {
+   margin: 0;
+   padding: 0;
+   color: #fff;
+   border-bottom-style: solid;
+   border-color: #000;
+   border-width: 1px;
+
+}
+#navList li a {
+    color: #fff;
+}
+
+.dropdown ul {
+   background-color: #ccc;
+}
+.dropdown ul li:hover {
+    background: #070707;
+    background: -moz-linear-gradient(top, #262626 0%, #070707 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #262626), color-stop(100%, #070707));
+    background: -webkit-linear-gradient(top, #262626 0%, #070707 100%);
+    background: -o-linear-gradient(top, #262626 0%, #070707 100%);
+    background: -ms-linear-gradient(top, #262626 0%, #070707 100%);
+    background: linear-gradient(to bottom, #262626 0%, #070707 100%);
+}
+
+/* Section Styles */
+
+#mainSection {
+   max-width: 940px;
+}
+
+#portImgHolder {
+   margin-top: 80px;
+   max-height: 176px;
+   max-width: 260px;
+}
+
+.memberPhoto {
+   width: 100%;
+   height: auto;
+   box-shadow: 8px 8px 4px #777;
+   border: .5px solid #777;
+}
+
+#myCarousel {
+   max-width: 940px;
+   width: 100%;
+   height: auto;
+   margin: 0 auto;
+   margin-bottom: 30%;
+}
+
+.carousel-indicators {
+   display: none;
+}
+
+#slide1 {
+   max-width: 940px;
+   width: 100%;
+   height: auto;
+   margin: auto;
+   min-height: 500px;
+}
+
+#slide1 p {
+   padding: 100px;
+   text-align: center;
+   font-size: 260%;
+   color: #fff;
+}
+@media (max-width: 768px){
+   #slide1 {
+      background: none;
+   }
+   #slide1 p {
+      font-size: 300%;
+      color: #999;
+   }
+}
+
+@media screen and (max-width: 480px) {
+   #slide1 p {
+      font-size: 100%;
+      max-height: 200px;
+      margin-bottom: 140px;
+   }
+}
+
+#slide2 {
+   max-width: 940px;
+   text-align: center;
+   padding: 0 4%;
+}
+
+#slide2 #aboutPortfolio {
+   font-size: 180%;
+}
+
+#slide2 h3 {
+   font-size: 160%; 
+   text-decoration: bold;  
+   text-decoration: underline;
+   color: #cc9933;   
+}
+
+#slide2 p {
+   font-size: 140%;
+   margin-bottom: 2%;
+   padding: 0 2%;
+}
+
+@media (max-width: 768px){
+   #slide2 div div {
+      margin-top: 100px;
+      font-size: 80%;
+   }
+   
+   #slide2 div .slide2Last {
+      margin-bottom: 100px;
+   }
+}
+
+#aboutColumns {
+   max-width: 940px;
+   text-align: center;
+}
+
+#slide3 {
+   max-width: 940px;
+   text-align: center;
+   padding: 0 4%;
+}
+
+@media (max-width: 768px) {
+   #slide3 div div {
+      margin-top: 60px;
+   }
+}
+
+#slide3 div div h3 {
+   color: #cc9933;
+   text-decoration: bold;
+   font-size: 180%;
+}
+
+.skillHeader {
+   text-decoration: underline;
+}
+
+#slide3 div div p {
+   font-size: 80%;
+}
+
+.skillsColumns {
+   max-width: 940px;
+   text-align: center;
+}
+
+.skillsColumns div {
+   margin-top: 4%;
+}
+
+hr {
+   border: 0;
+   height: 2px;
+   background-image: -webkit-linear-gradient(left, rgba(204,204,204,0), rgba(204,204,204,0.9), rgba(204,204,204,0));
+   background-image:    -moz-linear-gradient(left, rgba(204,204,204,0), rgba(204,204,204,0.9), rgba(204,204,204,0));
+   background-image:     -ms-linear-gradient(left, rgba(204,204,204,0), rgba(204,204,204,0.9), rgba(204,204,204,0));
+   background-image:      -o-linear-gradient(left, rgba(204,204,204,0), rgba(204,204,204,0.9), rgba(204,204,204,0));
+}
+
+#slide4 {
+   margin-top: -20px;
+   text-align: center;
+   max-width: 940px;
+   padding: 0 12%;
+}
+
+#slide4 h2 {
+   font-size: 240%;
+   text-decoration: bold;
+}
+
+#slide4 p {
+   font-size: 120%;
+   margin-bottom: 20px;
+}
+
+#slide4 div div {
+   margin-bottom: 4%;
+}
+
+#slide4 img:hover {
+   border: 2px solid #cc9933;
+   cursor: pointer;
+}
+
+#slide5 {
+   max-width: 940px;
+   text-align: center;
+}
+
+#faqForm {
+   margin: 0 auto;
+   max-width: 940px;
+   text-align: center;
+}
+
+#contact input {
+    max-width: 480px;
+    width: 94%;
+    padding: 10px;
+    font-size: 110%;
+    margin-bottom: 20px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    outline: 0;
+    border: 1px solid #aaa;
+    margin: 0 2% 2% 2%;
+}
+#contact input:focus {
+    border: 1px solid #cc9933;
+    box-shadow: 0 0 10px #cc9933;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+#contact textarea:focus {
+    border: 1px solid #cc9933;
+    box-shadow: 0 0 10px #cc9933;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+#contact textarea {
+    max-width: 480px;
+    width: 94%;
+    padding: 10px;
+    font-size: 110%;
+    margin-bottom: 20px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    outline: 0;
+    border: 1px solid #aaa;
+    height: 120px;
+}
+
+/* Carousel Clicker Styles */
+.carousel-inner {
+   margin: 80px auto;
+   height: 100%;
+   background: transparent;
+}
+
+#leftCarouselClick {
+   background: transparent;
+}
+
+#leftCarouselClick span {
+   color: #cc9933;
+   position: absolute;
+   top: 250px;
+}
+
+#rightCarouselClick {
+   background: transparent;
+}
+
+#rightCarouselClick span {
+   color: #cc9933;
+   position: absolute;
+   top: 250px;
+}
+
+/* Modal Styling */
+.modal {
+   background-color: rgba(0,0,0, 0.7);
+}
+
+.modal-header {
+   text-align: center;
+   font-size: 180%;
+   color: #999;
+}
+
+.modal-header h4 {
+   font-size: 140%;
+
+}
+
+.modal-body {
+   text-align: center;     
+}
+
+.modal-body img {
+   margin: 2% auto;
+   border: 2px solid;
+   border-radius: 5px;
+   width: 90%;
+   height: auto;
+}
+
+.modal-body p {
+   padding: 2%;
+   margin-bottom: 0;
+   font-size: 140%;
+   text-align: justify;
+   text-justify: inter-word;
+}
+   
+@media (max-width: 768px){
+   .modal-body p {
+      font-size: 100%;
+   }
+}
+
+#viewProjP {
+   text-align: center;
+   text-justify: inter-word;
+}
+
+#viewProjP a {
+   color: #cc9933;
+   font-variant: small-caps;
+   font-size: 140%;
+   font-weight: bold;
+}
+
+#viewProjP a:hover {
+   font-weight: bolder;
+}
+
+@media (max-width: 768px) {
+   #viewProjP a {
+      text-decoration: underline;
+   }
+}
+
+
+/* Footer Styles */
+footer {
+    max-width: 940px;
+    margin: 0 auto;
+    text-align: center;
+    background: #070707;
+    background: -moz-linear-gradient(top, #262626 0%, #070707 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #262626), color-stop(100%, #070707));
+    background: -webkit-linear-gradient(top, #262626 0%, #070707 100%);
+    background: -o-linear-gradient(top, #262626 0%, #070707 100%);
+    background: -ms-linear-gradient(top, #262626 0%, #070707 100%);
+    background: linear-gradient(to bottom, #262626 0%, #070707 100%);
+
+}
+
+footer p {
+    text-align: center;
+    font-size: 110%;
+    padding: 5px;
+    color: #999;
+}
+
+footer p a {
+    color: #999;
+}
+
+footer p span {
+    color: #cc9933;
+}
+
+footer p a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+
+#socialMediaFooter{
+    margin: 8px 0px 2px 0px;
+}
+
+#socialMediaFooter a {
+    margin: 0 4px;
+}
+
+#socialMediaFooter a img:hover {
+     border: 1px solid #fff;
+}

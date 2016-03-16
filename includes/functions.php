@@ -2365,7 +2365,7 @@ function  getFooter()
              <img src="../graphics/icons/linkedin-square-social-media2.png"
                   width="20" height="20" alt="View Binary Beasts's LinkedIn profile"  border="0">
           </a>
-          <a target="_blank" href="https://github.com/basis14/bsquared">
+          <a target="_blank" href="https://github.com/basis14/basis2016-bsquared">
              <img src="../graphics/icons/github-square-social-media2.jpg"
                   width="20" height="20" alt="View this site with github" border="0">
           </a>

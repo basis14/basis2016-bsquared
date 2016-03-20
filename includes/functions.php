@@ -41,6 +41,7 @@ include_once  $_SERVER['DOCUMENT_ROOT'].'/config.php';
 include_once 'db_connect_visitor.php';
 include_once 'db_connect_admin.php';
 include_once 'db_connect_member.php';
+define("MAX_COLUMNS", 4);
 ///////////////////////////////////////////END CONNECTIONS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 ///////////////////////////////////////ADMINISTRATIVE CONTROLS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -2425,241 +2426,98 @@ function  getVisitorNavigation($db)
 }
 
 
-
-
-/**
- * Name: generatePortraitArray
- * Purpose: Generates a grid of user portraits.
- * @param mixed $rows
- * @param mixed $columns
- * @param mixed $db
- * @version 1.0.0
- * @author Jason Kessler-Holt <>
- * @author Sherri Miller <sherrimiller3397@gmail.com>
- */
-function generatePortraitArray($db)
+function getOpeningSplashDBView($db)
 {
-    // SQL Query Statement
-    $statement = "SELECT userID FROM portfolio_profiles";
+    return $db->execute("SELECT * FROM test_view");
+}
 
-    // Grab a list of userID from the portfolio_members table
-    $profileIDs = $db->execute($statement);
-    
-    // Get count of ProfileIDs
-    $profileIDsCount = count($profileIDs);
-    
-    // Get # of columns
-    $columns = getColumnNumberPortraits($profileIDsCount);
-    $totalColumns = $columns;
-    
-    // Get # of rows
-    $rows = getRowNumberPortraits($profileIDsCount, $columns);
-    
-    // Get # of UserIDs that can't complete a new entire row (Modulus)
-    $modulus = getModulusOfRows($profileIDsCount, $rows, $columns);
-    
-    //$trueRowCount = $rows; // declare variable to get row count for html
-    
-    //if($modulus > 0) {$trueRowCount += 1} // must have a row to account for leftover profileIDs (modulus)
+function MakeOpeningSplash($db)
+{
+    $profiles = getOpeningSplashDBView($db);
+    $countProfiles = count($profiles);
 
-    // This keeps track of the current index of the profileIDs for the second loop when building the onclick event.
-    $index = 0;
-    
+    if($countProfiles == 0 || $countProfiles == null)
+    {
+        return $countProfiles;
+    }
+    else
+    {
+        prepareOpeningSplash($countProfiles, $profiles);
+    }
+}
+
+function prepareOpeningSplash($countProfiles, $profiles)
+{
+    $rowCount = 0;
     echo '<div id="profileImgDiv" class="container allImgHolder">';
-       
-       for($i = 0; $i < $rows; $i++){
 
-          echo '<div id="imgRow' . ($rows + 1) . '" class="row imgRow">';
-             for($j=0; $j < $columns; $j++) {
+    for($i = 1; $countProfiles>=MAX_COLUMNS; $countProfiles--, $i++)
+    {
+        $users = [];
+        $countProfiles = $countProfiles-MAX_COLUMNS;
+        $rowCount++;
+        echo "<div id='imgRow$i' class='row imgRow'>"; // Top Level Div Element.
 
-                 // Grab the user's profile information
-            $profileInfo = $db->execute("SELECT firstName, lastName, aboutMe
-                                         FROM portfolio_profiles
-                                         WHERE userID = ?",
-                DatabaseManager::TYPE_SELECT, array($profileIDs[$index]['userID']));
+        for($j =0; $j<MAX_COLUMNS; $j++)
+        {
+            array_push($users, array_shift($profiles));
+        }
 
+        fullRowPortraitRow($users);
 
-            // Mission Statement goes in here - either adds default mission statement,
-            // or grabs the missions statement from the database.
+        echo "</div>"; // Close Top Level Div after return.
+    }
+    if($countProfiles<MAX_COLUMNS)
+    {
+        $users = [];
+        echo "<div id='imgRow$i' class='row imgRow'>"; // Top Level Div Element.
 
-            // If an about me isn't found for a user, add a default mission statement.
-            if ($profileInfo[0]['aboutMe'] == 'NULL' || $profileInfo[0]['aboutMe'] == '')
-            {
-                $onMouseOverInnerHTML = $profileInfo[0]['firstName'] . " " . $profileInfo[0]['lastName'] . "<br><br>" .
-                    'Coming Soon!';
-            }
-            else
-            {
-                $onMouseOverInnerHTML = $profileInfo[0]['firstName'] . " " . $profileInfo[0]['lastName'] . "<br><br>" .
-                    $profileInfo[0]['aboutMe'];
-            }
+        $difference = MAX_COLUMNS - $countProfiles;
+        for($k = 0; $k<$difference; $k++)
+        {
+            array_push($users, array_shift($profiles));
+        }
 
-            $result = $db->execute("SELECT path
-                                    FROM portfolio_paths
-                                    WHERE userID = ?
-                                    AND destination_id =36",
-                DatabaseManager::TYPE_SELECT, array($profileIDs[$index]['userID']));
+        partialPortraitRow($difference, $users);
+        echo "</div>"; // Close Top Level Div after return.
+    }
+    echo "</div>"; // Close Top Level Div after return.
+}
 
-            if (!empty($result))
-            {
-                foreach ($result as $value)
-                {
-                    $imageSourcePath = $value['path'];
-                }
-            }
-            else
-            {
-                $imageSourcePath  = '../graphics/member_uploads/default_profile.png';
-            }
+function fullRowPortraitRow($users)
+{
+    for($i = 0; $i<MAX_COLUMNS; $i++)
+    {
+        $user = array_shift($users);
+        generateRow($user, 3);
+    }
+}
 
-
-
-                 //$defaultWelcomeMessage = "<p id="descripPar class='descripPar'> Welcome to b[squared]!<p>";
-                 //$defaultWelcomeMessage .= "<p>Home of <a href="http://www.olympic.edu/information-systems-bachelor-applied-sciences-bas" Olympic College
-                 //                              Bachelors of Applied Science Information Systems (BAS IS)</a> <span>2014-2016</span> cohort. Please select
-                 //                              a photo above to learn more about the person in the photo. If you would like to learn more about the BAS IS program
-                 //                              <a href='faq.php'> view our FAQ.</p>";
-
-            // Display each individual profile image
-            // Default Welcome message
-            $defaultWelcomeMessage = "Welcome to b[squared]! Home page of the BAS IS 2014-2016 coffff";
+function partialPortraitRow($difference, $users)
+{
+    for($i = 0; $i<$difference; $i++)
+    {
+        $user = array_shift($users);
+        generateRow($user, 3);
+    }
+}
 
 
+function generateRow($user, $bootstrapSize)
+{
+    $userID    = $user['userID'];
+    $firstName = $user['firstName'];
+    $lastName  = $user['lastName'];
 
-            if($totalColumns === 4) {
-               $imageDisplay = "<div class='col-sm-3'>";
-            }
-            else
-            { 
-               $imageDisplay = "<div class='col-sm-4'>";
-            }
+    $onMouseOverHTML = $firstName." ".$lastName;
 
-            $imageDisplay .= "<a href='#' onclick='getUserProfile(\"" . $profileIDs[$index]['userID'] . "\")'>";
-            $imageDisplay .= "<img onmouseover='document.getElementById(\"descripPar\").innerHTML=\"$onMouseOverInnerHTML\"' ";
-            $imageDisplay .= "onmouseout='getOpeningStatement()' src='" . $imageSourcePath . "'></a></div>";
-
-            echo $imageDisplay;
-
-            // Increment index for next user.
-            $index++;            
-             }
-          echo '</div>';
-       }
-       if($modulus > 0) {
-          
-          echo '<div id="imgRow' . (count($rows) + 1) . '" class="row imgRow oddRow">';
-          
-            $bootstrapCol = displayOddRow($modulus);
-      
-      for( $m=$index; $m < $profileIDsCount; $m++ ) {
-
-            /* Mission Statement goes in here - either adds default mission statement,
-             *or grabs the missions statement from the database.
-             *If an about me isn't found for a user, add a default mission statement.
-             */
-
-
-            if ($profileInfo[0]['aboutMe'] == 'NULL' || $profileInfo[0]['aboutMe'] == '')
-            {
-                $onMouseOverInnerHTML = $profileInfo[0]['firstName'] . " " . $profileInfo[0]['lastName'] . "<br><br>" .
-                    'Coming Soon!';
-            }
-            else
-            {
-                $onMouseOverInnerHTML = $profileInfo[0]['firstName'] . " " . $profileInfo[0]['lastName'] . "<br><br>" .
-                    $profileInfo[0]['aboutMe'];
-            }
-
-            $result = $db->execute("SELECT path FROM portfolio_paths WHERE userID = ? AND destination_id =36",
-                DatabaseManager::TYPE_SELECT, array($profileIDs[$index]['userID']));
-
-            if (!empty($result))
-            {
-                foreach ($result as $value)
-                {
-                    $imageSourcePath = $value['path'];
-                }
-
-            }
-            else
-            {
-                $imageSourcePath  = '../graphics/member_uploads/default_profile.png';
-            }
-
-
-            //$defaultWelcomeMessage = "fix me :)";
-
-
-          //$defaultWelcomeMessage = "<p id="descripPar class='descripPar'> Welcome to b[squared]!<p>";
-          //$defaultWelcomeMessage .= "<p>Home of <a href="http://www.olympic.edu/information-systems-bachelor-applied-sciences-bas" Olympic College
-          //                              Bachelors of Applied Science Information Systems (BAS IS)</a> <span>2014-2016</span> cohort. Please select
-          //                              a photo above to learn more about the person in the photo. If you would like to learn more about the BAS IS program
-          //                              <a href='faq.php'> view our FAQ.</p>";
-
-
-          $imageDisplay = "<div class='col-sm-".$bootstrapCol."'>";
-            $imageDisplay .= "<a href='#' onclick='getUserProfile(\"" . $profileIDs[$index]['userID'] . "\")'>";
-            $imageDisplay .= "<img onmouseover='document.getElementById(\"descripPar\").innerHTML=\"$onMouseOverInnerHTML\"' ";
-            $imageDisplay .= "onmouseout='getOpeningStatement()' src='" . $imageSourcePath . "'></a></div>";
-
-            echo $imageDisplay;
-
-            // Increment index for next user.
-            $index++;
-      }
-          
-          echo '</div>';
-       }
-    
+    echo "<div class='col-sm-$bootstrapSize nameLink'>";
+    echo "<a href='#' onclick='getUserProfile($userID)'>";
+    echo "<img class='hoverTransition' onmouseover='document.getElementById(\"descripPar\").innerHTML=\"$onMouseOverHTML\"'";
+    echo "onmouseout='openingState()'";
+    echo "src='../graphics/member_uploads/default_profile.png'>";
+    echo "<span class='userFullName' id='userFullName'>$firstName $lastName</span></a>";
     echo "</div>";
-     
-}
-
-function getColumnNumberPortraits($count) {
-   if ($count > 6) {
-      $columns = 4;  
-   }
-   elseif ($count == 2)
-   {
-      $columns = 2;
-      //$columns = 3;
-   }
-   elseif($count == 1)
-   {
-      $columns = 1;   
-   }
-   else
-   {
-      $columns = 3;
-   }
-   return $columns;
-}
-
-function getRowNumberPortraits($profileIDsCount, $columns) {
-   
-      $rows = ($profileIDsCount / $columns); // rows = total userID / # of columns
-      $rows = floor($rows); // round down 
-      return $rows;
-}
-
-function getModulusOfRows($profileIDsCount, $rows, $columns) {
-   $modulus = ($profileIDsCount % ($rows+1) * $columns);
-   return $modulus;
-}
-
-function displayOddRow($modulus) {
-   if($modulus === 1) {
-      $bootstrapCol = 12;
-   }
-   elseif ($modulus === 2) {
-      $bootstrapCol = 6;
-   }
-   else
-   {
-      $bootstrapCol = 4;
-   }
-   return $bootstrapCol;
-   
 }
 
 

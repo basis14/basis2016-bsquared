@@ -72,12 +72,20 @@ $logged = checkIfLoggedIn($db);
        })
     });  
     </script>
-    <script>
-    function activeFunction() { 
-    var currentPage = document.getElementById('homePageActive');
-       currentPage.className += ' active';
+  <script>
+    function activeFunction() {
+      var currentPage = document.getElementById('homePageActive');
+      currentPage.className += ' active';
     }
-    </script>
+    function openingState()
+    {
+      var openingStatement =
+          'Please select a photo above to learn more about the person in the photo.'+
+          'If you would like to learn more about the BAS IS program'+'<a href="../faq.php">view our FAQ.</p>';
+
+      return $("#descripPar").html("").append(openingStatement);
+    }
+  </script>
   <?php UserModules::getPageScripts() ?>
 
 </head>
@@ -85,21 +93,28 @@ $logged = checkIfLoggedIn($db);
 
 <?php UserModules::generateNavigation($db, $logged)?>
 
-<!-- Portraits -->
-<?php generatePortraitArray($db); ?>
+<!-- Opening Statement  -->
+<p class="topStatement ocLink"><span class="logo">Welcome to b<span class="logoBlack">[</span>squared<span
+        class="logoBlack">]</span></span>
+  <br>
+  <a  href="http://www.olympic.edu/information-systems-bachelor-applied-science-bas" target="_blank">
+    Olympic College Bachelors of Applied Science Information Systems</a><br>
+  <span class="logoBlack">Cohort 2014-2016 </span>
+</p>
+<hr id="indexDivider">
 
+<!-- Portraits -->
+<?php MakeOpeningSplash($db); ?>
+
+<!-- Closing statement -->
 <hr id="indexDivider">
 <div class="container">
-  <p id="descripPar" class="descripPar">
-    Welcome to b[squared]!<br>
-    Home of<br> <a href="http://www.olympic.edu/information-systems-bachelor-applied-science-bas">
-      Olympic College Bachelors of Applied Science Information Systems(BAS IS)</a>
-    <br><span>2014-2016</span> cohort. Please select a photo above to learn more about the person in photo! If you
-    would like to
-    learn more about the BAS IS program <a href="faq.php"><br> view the FAQ.</a>
+  <p id="descripPar ocLink" class="descripPar"><span class="logoBlack">Want to know more about the program?</span>
+    <a href="faq.php"><br>view the FAQ.</a>
   </p>
 </div>
 
+<!-- Footer -->
 <?php getFooter(); ?>
 </body>
 </html>

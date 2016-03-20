@@ -80,15 +80,12 @@ $logged = checkIfLoggedIn($db);
          $('.carousel').carousel('pause');
 
           $("form").valid();
+
+          $(".nav ul li a").each(function(){
+              $(".active").removeClass("active");
+          })
       });
   </script>
-  <script>
-    $(document).ready(function(){
-       $(".nav ul li a").each(function(){
-          $(".active").removeClass("active");
-       })
-    });  
-    </script>
     <script>
     function activeFunction() { 
     var currentPage = document.getElementById('portfolioPageActive');
@@ -146,9 +143,10 @@ $logged = checkIfLoggedIn($db);
     </div>
 
     <div id="slide4" class="item">
-      <h2>Select a Project!</h2>
-      <p>Hover over a project to gather a brief description, or click the image to see the specs!</p>
-        <?php UserModules::doProjectModule(10, $db, $userID, 3, 3, 130, 130); ?>      
+      <h2 id="worksTitle">Select a Project!</h2>
+      <p id="descriptionWorks">Hover over a project to gather a brief description, or click the image to see the
+          specs!</p>
+        <?php UserModules::doProjectModule($db, $userID); ?>
     </div>
 
     <div id="slide5" class="item">

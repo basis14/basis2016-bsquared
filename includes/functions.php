@@ -2097,13 +2097,9 @@ function  getAboutColumn($i, $db, $userID)
  */
 function  getWorksTitles($db, $userID, $worksNumber)
 {
-    $result = $db->execute("SELECT title FROM portfolio_works
+    return $db->execute("SELECT title FROM portfolio_works
                               WHERE userID = ?
-                              AND destination_id = '".$worksNumber."'",DatabaseManager::TYPE_SELECT,array($userID));
-    foreach($result as $row)
-    {
-        echo $row['title'];
-    }
+                              AND worksID = '".$worksNumber."'",DatabaseManager::TYPE_SELECT,array($userID));
 }
 
 
@@ -2147,24 +2143,6 @@ function  getPortfoliosNavigation($db)
     }
 ?>
 <?php
-}
-
-//$defaultWelcomeMessage = "<p id="descripPar class='descripPar'> Welcome to b[squared]!<p>";
-//$defaultWelcomeMessage .= "<p>Home of <a href="http://www.olympic.edu/information-systems-bachelor-applied-sciences-bas" Olympic College
-//                              Bachelors of Applied Science Information Systems (BAS IS)</a> <span>2014-2016</span> cohort. Please select
-//                              a photo above to learn more about the person in the photo. If you would like to learn more about the BAS IS program
-//                              <a href='faq.php'> view our FAQ.</p>";
-
-function getOpeningStatement()
-{
-    ?>
-    <script>
-       function openingStatement()
-       {
-           return "Welcome to b[squared]! Home of Olympic College Bachelors of Applied Science.";
-       }
-    </script>
-    <?php
 }
 
 

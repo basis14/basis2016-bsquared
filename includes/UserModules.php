@@ -42,6 +42,7 @@
  * Class UserModules
  *
  */
+
 class UserModules
 {
     public static function doOpeningStatement()

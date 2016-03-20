@@ -1,5 +1,9 @@
 @charset "utf-8";
-/* CSS Document */
+/* CSS Document
+
+Author: Lucas Mathis
+*/
+
 
 * {
     margin: 0;
@@ -90,7 +94,7 @@ nav {
 
 #profileImgDiv {
     max-width: 700px;
-    margin: 80px auto !important;
+    margin: 0px auto !important;
 }
 
 .imgRow {
@@ -98,11 +102,12 @@ nav {
 }
 
 .imgRow div a img {
-    margin-bottom: 4%;
+
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     border: 1px solid #999;
+
 }
 
 .imgRow div a img:hover {
@@ -115,6 +120,17 @@ nav {
     -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
     border: 3px solid #cc9933;
+}
+
+span#userFullName {
+    display: block;
+    padding-bottom: 2%;
+    color: #070707;
+    font-size: 115%;
+}
+
+span#userFullName:hover{
+    color: #cc9933;
 }
 
 .oddRow {
@@ -150,8 +166,36 @@ nav {
 
 /* Paragraph (description) Styles -HomePage */
 
+.topStatement{
+    margin: 55px 0 auto;
+    text-align: center;
+    font-size: 200%;
+    color: #070707;
+}
+
+.logo{
+    color: black;
+    font-size:215%;
+}
+
+.logoBlack{
+    color: #cc9933;
+}
+
+.ocLink a:hover {
+    color: #cc9933;
+}
+
+.ocLink a {
+    color: inherit;
+}
+
+.nameLink a{
+    color: inherit;
+}
+
 .descripPar {
-    margin: 20px auto;
+    margin: 0px auto;
     margin-bottom: 100px;
     max-width: 840px;
     text-align: center;
@@ -222,11 +266,6 @@ footer p a:hover {
    margin-top: 80px;
    max-width: 940px;
 }
-
-
-
-
-
 
 
 /* Slider Styles */

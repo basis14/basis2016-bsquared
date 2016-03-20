@@ -127,10 +127,12 @@ span#userFullName {
     padding-bottom: 2%;
     color: #070707;
     font-size: 115%;
+    text-decoration: inherit;
 }
 
 span#userFullName:hover{
     color: #cc9933;
+    text-decoration: inherit;
 }
 
 .oddRow {

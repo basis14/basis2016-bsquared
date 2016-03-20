@@ -45,6 +45,7 @@
 
 class UserModules
 {
+
     public static function doOpeningStatement()
     {
         ?>
@@ -281,39 +282,24 @@ class UserModules
      */
     public static function doProjectModule($projectID, $db, $userID, $rows, $columns, $height, $width)
     {
-        // Works range is 10 - 18
-        $worksCurrent = $projectID;
+        $maxColumns = 3;
+        $maxRows   = 3;
+        $worksLastWorksID = 19;
 
-        // Display an array of project preview images.
-        for($row = 0; $row < $rows; $row++)
+        for($x = 10; $x<$worksLastWorksID; $x++)
         {
+            echo "<br> Work ".$x." ";
+            echo "UserID".$userID."<br>";
+        }
+
+        for($row = 1; $row <$maxRows+1; $row++)
+        {
+            //echo "row number: ".$row."<br>";
             echo "<div class='row'>";
-
-            for($column = 1; $column <= $columns; $column++)
+            for($column =1; $column<$maxColumns+1; $column++)
             {
-                // Grab project preview image path.
-                $imageSource = $db->execute("SELECT path FROM portfolio_paths WHERE userID = ?
-                    AND destination_id='".$worksCurrent."'",
-                    DatabaseManager::TYPE_SELECT,array($userID));
-
-                // Add a default image if there was no project.
-                if(!empty($imageSource))
-                {
-                    $imageSource = $imageSource[0]['path'];
-                }
-                else
-                {
-                    $imageSource = "../graphics/member_uploads/project_uploads/project_preview_default.png";
-                }
-
-                echo "<div class='col-sm-4'>";
-
-                echo "<img src='".$imageSource."' type='button' data-toggle='modal'
-                data-target='#modal$column' height='$height' width='$width' alt='project coming soon'>";
-
-                echo "</div>";
-
-                $worksCurrent++;
+                //$path = array_shift($imageSource);
+                //echo $path['path'];
             }
             echo "</div>";
         }

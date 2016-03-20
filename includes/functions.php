@@ -2425,27 +2425,59 @@ function  getVisitorNavigation($db)
 <?php
 }
 
-
+/**
+ * Name: getOpeningSplashDBView
+ * Purpose: returns the DB view for the front page.
+ * @param $db
+ * @return mixed
+ * @version 1.1
+ * @author Aaron Young <mustarddevelopment@gmail.com>
+ */
 function getOpeningSplashDBView($db)
 {
-    return $db->execute("SELECT * FROM test_view");
+    return $db->execute("SELECT * FROM opening_splash");
 }
 
+/**
+ * Name: MakeOpeningSplash
+ * Purpose: starts the cycle for displaying opening page portrait splash.
+ * @param $db
+ * @return int
+ * @version 1.1
+ * @author Aaron Young <mustarddevelopment@gmail.com>
+ */
 function MakeOpeningSplash($db)
 {
-    $profiles = getOpeningSplashDBView($db);
-    $countProfiles = count($profiles);
+    $profiles = getOpeningSplashDBView($db); // Returns the profiles from the db view.
+    $countProfiles = count($profiles); // Stores the count of the number returned.
 
-    if($countProfiles == 0 || $countProfiles == null)
+    if($countProfiles == 0 || $countProfiles == null) // If there are no profiles loaded. Return 0.
     {
         return $countProfiles;
     }
     else
     {
-        prepareOpeningSplash($countProfiles, $profiles);
+        // Profiles were returned from the view, prepare the splash.
+        try
+        {
+            prepareOpeningSplash($countProfiles, $profiles);
+        }
+        catch(Exception $e)
+        {
+            // For some type of failure, return profiles to zero.
+            return $countProfiles;
+        }
     }
 }
 
+/**
+ * Name: prepareOpeningSplash
+ * Purpose: Bulk of the algorithm for producing upside-down pyramid.
+ * @param $countProfiles
+ * @param $profiles
+ * @version 1.1
+ * @author Aaron Young <mustarddevelopment@gmail.com>
+ */
 function prepareOpeningSplash($countProfiles, $profiles)
 {
     $rowCount = 0;
@@ -2484,30 +2516,53 @@ function prepareOpeningSplash($countProfiles, $profiles)
     echo "</div>"; // Close Top Level Div after return.
 }
 
+/**
+ * Name: fullRowPortraitRow
+ * Purpose: Generates a complete row for the splash.
+ * @param $users
+ * @version 1.1
+ * @author Aaron Young <mustarddevelopment@gmail.com>
+ */
 function fullRowPortraitRow($users)
 {
-    for($i = 0; $i<MAX_COLUMNS; $i++)
+    for($i = 0; $i<MAX_COLUMNS; $i++) // Do the max, since this is a full row.
     {
-        $user = array_shift($users);
+        $user = array_shift($users); // shift one of the users during an iteration.
         generateRow($user, 3);
     }
 }
 
-function partialPortraitRow($difference, $users)
+/**
+ * Name: partialPortraitRow
+ * Purpose: Generates the
+ * @param $difference
+ * @param $users
+ * @version 1.1
+ * @author Aaron Young <mustarddevelopment@gmail.com>
+ */
+function partialPortraitRow($difference, $users) // Do the difference, since this is a partial row.
 {
     for($i = 0; $i<$difference; $i++)
     {
-        $user = array_shift($users);
-        generateRow($user, 3);
+        $user = array_shift($users);  // shift one of the users during an iteration.
+        generateRow($user, 4);
     }
 }
 
-
+/**
+ * Name: generateRow
+ * Purpose: Standard HTML within a row on the index page.
+ * @param $user
+ * @param $bootstrapSize
+ * @version 1.1
+ * @author Aaron Young <mustarddevelopment@gmail.com>
+ */
 function generateRow($user, $bootstrapSize)
 {
     $userID    = $user['userID'];
     $firstName = $user['firstName'];
     $lastName  = $user['lastName'];
+    $path      = $user['path'];
 
     $onMouseOverHTML = $firstName." ".$lastName;
 
@@ -2515,11 +2570,10 @@ function generateRow($user, $bootstrapSize)
     echo "<a href='#' onclick='getUserProfile($userID)'>";
     echo "<img class='hoverTransition' onmouseover='document.getElementById(\"descripPar\").innerHTML=\"$onMouseOverHTML\"'";
     echo "onmouseout='openingState()'";
-    echo "src='../graphics/member_uploads/default_profile.png'>";
+    echo "src='$path'>";
     echo "<span class='userFullName' id='userFullName'>$firstName $lastName</span></a>";
     echo "</div>";
 }
-
 
 /**
  * Name: getPortfolioBackground

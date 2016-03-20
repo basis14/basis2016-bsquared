@@ -94,7 +94,7 @@ $logged = checkIfLoggedIn($db);
 </head>
 
 <body onload="activeFunction()">
-<div class="container">
+<div id="main" class="container">
 
     <?php getMemberNavigation($db, $logged); ?>
     <br><br><br>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Basis2016-bsquared by basis14</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Basis2016-bsquared</h1>
+        <h2>Olympic College BASIS 2016 Cohort b[squared] portfolio website project</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/basis14/basis2016-bsquared/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/basis14/basis2016-bsquared/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/basis14/basis2016-bsquared" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p><img src="https://github.com/basis14/bsquared/blob/master/graphics/logo4.png" alt="bsquared_logo"></p>
+
+<h1>
+<a id="b-squared-the-portfolio-website-for-the-bachelors-of-applied-science-information-systems-basis-2014-cohort" class="anchor" href="#b-squared-the-portfolio-website-for-the-bachelors-of-applied-science-information-systems-basis-2014-cohort" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>B Squared, the Portfolio Website for the Bachelors of Applied Science Information Systems (BASIS) 2014 cohort</h1>
+
+<p><a href="https://codeclimate.com/repos/56d25d21c7d8f80436000cc6/feed"><img src="https://codeclimate.com/repos/56d25d21c7d8f80436000cc6/badges/8f6cd342417b10c91428/gpa.svg"></a>
+<a href="https://scrutinizer-ci.com/g/basis14/bsquared/?branch=staged_branch"><img src="https://scrutinizer-ci.com/g/basis14/bsquared/badges/quality-score.png?b=staged_branch&amp;s=cbdd93890c51c913d7fcdfc90746ff2f020126ee" alt="Scrutinizer Code Quality"></a></p>
+
+<h2>
+<a id="purpose" class="anchor" href="#purpose" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Purpose:</h2>
+
+<p>The b[Squared] portfolio website was built for the Bachelors of Applied Science Information Systems Cohort of 2014 - 2016. This portfolio management website allows for cohort to upload and display information to future employers or peers regarding themselves and any work they would like to display. The design was built for a LAMP stack, and is a database driven design that allows each member access into the website.</p>
+
+<h3>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements:</h3>
+
+<ol>
+<li>XAMPP/WAMP SERVER</li>
+<li>PHP</li>
+<li>MySQL</li>
+</ol>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration:</h2>
+
+<ol>
+<li>Clone the bsquared repository on you local server, typically xampp/htdocs/[bsquared]</li>
+<li>Import the schema.sql database from the data/sql directory to the MySQL service.</li>
+<li>The administrative password is T3chnology!! and the e-mail is set to <a href="mailto:youradmin@example.com">youradmin@example.com</a>.</li>
+<li>Ensure the user's are made in the MySQL Service. The website is set for an config.ini file to be placed outside the root in a folder that will store your passwords.
+three users accounts were made for use on the database, one for visitors, one for members and one for administrators. You can view the separation of control in the includes that connect to the database.</li>
+<li>Browse to the localhost where your bsquared portfolio is running.</li>
+<li>phpmyadmin was used in the creation of the database and maybe used to ensure a successful configuration, not recommended for production use.</li>
+<li>The bsquared cohort default user authentication scheme is set but will be removed for public release. Once you are logged into the website under the admin, go to the add user under administrative, you may add as many users to get started.</li>
+<li>If there are any questions regarding the configuration of this portfolio website contact Aaron Young, <a href="mailto:mustarddevelopment@gmail.com">mustarddevelopment@gmail.com</a>
+</li>
+</ol>
+
+<h3>
+<a id="the-mit-license-mit" class="anchor" href="#the-mit-license-mit" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The MIT License (MIT)</h3>
+
+<p>Copyright (c) 2016-Present b[Squared]</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+
+<h3>
+<a id="sha-512-hash-algorithm" class="anchor" href="#sha-512-hash-algorithm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SHA 512 Hash Algorithm</h3>
+
+<p>A JavaScript implementation of the Secure Hash Algorithm, SHA-512, as defined
+in FIPS 180-2 Version 2.2 Copyright Anonymous Contributor, Paul Johnston 2000 - 2009.
+Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet
+Distributed under the BSD License See <a href="http://pajhome.org.uk/crypt/md5">http://pajhome.org.uk/crypt/md5</a> for details.</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>

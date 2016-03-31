@@ -17,6 +17,7 @@ Author: Lucas Mathis
     max-width: 940px;
     margin: 0 auto;
     background-color: #fff;
+    padding-bottom: 25%;
 }
 
 /* Navigation Style */
@@ -209,6 +210,8 @@ footer {
     max-width: 940px;
     margin: 0 auto;
     text-align: center;
+    bottom: 0;
+    position: absolute;
     background: #070707;
     background: -moz-linear-gradient(top, #262626 0%, #070707 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #262626), color-stop(100%, #070707));

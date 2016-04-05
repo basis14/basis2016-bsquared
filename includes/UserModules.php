@@ -45,6 +45,7 @@
 
 class UserModules
 {
+
     public static function doOpeningStatement()
     {
         ?>
@@ -267,34 +268,36 @@ class UserModules
     /**
      * Name: UserModules::doProjectModule()
      * Purpose: Display the projects in an array. Used for the portfolio page.
-     * @param mixed $projectID 
-     * @param mixed $db 
-     * @param mixed $userID 
-     * @param mixed $rows 
-     * @param mixed $columns 
-     * @param mixed $height 
-     * @param mixed $width
      * @uses DatabaseManager::TYPE_SELECT()
      * @author Jason Kessler-Holt
      * @author Lucas Mathis <mathis.lucas10@gmail.com>
-     * @version 1.0.0
+     * @author Aaron Young <mustarddevelopment@gmail.com>
+     * @version 1.2
+     * @param $db
+     * @param $userID
      */
-    public static function doProjectModule($projectID, $db, $userID, $rows, $columns, $height, $width)
+    public static function doProjectModule($db, $userID)
     {
-        // Works range is 10 - 18
-        $worksCurrent = $projectID;
+        $maxColumns = 3;
+        $maxRows   = 3;
+        $gridNumber = 10;
+        $count = 1;
 
-        // Display an array of project preview images.
-        for($row = 0; $row < $rows; $row++)
+        for($row = 1; $row <$maxRows+1; $row++)
         {
             echo "<div class='row'>";
-
-            for($column = 1; $column <= $columns; $column++)
+            for($column =1; $column<$maxColumns+1; $column++)
             {
-                // Grab project preview image path.
+                echo '<div class="col-sm-4">';
+
                 $imageSource = $db->execute("SELECT path FROM portfolio_paths WHERE userID = ?
-                    AND destination_id='".$worksCurrent."'",
+                    AND destination_id='".$gridNumber."'",
                     DatabaseManager::TYPE_SELECT,array($userID));
+
+
+                //$title = getWorksTitles($db, $userID, $gridNumber);
+
+                //var_dump($title);
 
                 // Add a default image if there was no project.
                 if(!empty($imageSource))
@@ -306,14 +309,14 @@ class UserModules
                     $imageSource = "../graphics/member_uploads/project_uploads/project_preview_default.png";
                 }
 
-                echo "<div class='col-sm-4'>";
+                echo '<img src="'.$imageSource.'" type="button" data-toggle="modal" data-target="#modal'.$count.'"';
+                echo 'onmouseover="$("#worksTitle").html("").append("")"';
+                echo 'onmouseout=""';
+                echo 'height="130" width="130" alt="works">';
 
-                echo "<img src='".$imageSource."' type='button' data-toggle='modal'
-                data-target='#modal$column' height='$height' width='$width' alt='project coming soon'>";
-
-                echo "</div>";
-
-                $worksCurrent++;
+                echo '</div>';
+                $gridNumber++;
+                $count++;
             }
             echo "</div>";
         }

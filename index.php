@@ -65,27 +65,16 @@ $logged = checkIfLoggedIn($db);
       development, networking">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>
-    $(document).ready(function(){
-       $(".nav ul li a").each(function(){
-          $(".active").removeClass("active");
-       })
-    });  
-    </script>
-  <script>
-    function activeFunction() {
-      var currentPage = document.getElementById('homePageActive');
-      currentPage.className += ' active';
-    }
-    function openingState()
-    {
-      var openingStatement =
-          'Please select a photo above to learn more about the person in the photo.'+
-          'If you would like to learn more about the BAS IS program'+'<a href="../faq.php">view our FAQ.</p>';
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/ico" href="favicon.ico">
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://malsup.github.com/jquery.form.js"></script>
+  
+  <script src="js/Bsquared.js"></script>
 
-      return $("#descripPar").html("").append(openingStatement);
-    }
-  </script>
   <?php UserModules::getPageScripts() ?>
 
 </head>

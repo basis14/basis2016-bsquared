@@ -221,7 +221,6 @@ if (isset($_POST['doWorks']))
                 $field_column_transition = $fields[$i];
                 array_push($inputName, $fields[$i]);
                 array_push($columns, "worksID");
-
             }
         }
     }

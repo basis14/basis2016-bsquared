@@ -1327,8 +1327,8 @@ function  inputValues($db, $userID, $inputName, $table, $columns, $destinationID
 
                     /** @noinspection PhpUndefinedMethodInspection */
                     $numberRows = $db->execute("SELECT $columns[$i] FROM $table[$i]
-                                                 WHERE userID = ?
-                                                 AND destination_id = $destinationID[$i]",
+                                                WHERE userID = ?
+                                                AND destination_id = $destinationID[$i]",
                         DatabaseManager::TYPE_SELECT, array($userID));
 
                     //  If the number of rows returned are greater than zero, update the existing information.
@@ -1361,29 +1361,39 @@ function  inputValues($db, $userID, $inputName, $table, $columns, $destinationID
                 if(isset($_POST["$inputName[$i]"]) && !empty($_POST["$inputName[$i]"]))
                 {
                     //  Clean the input.
-                    $input = $_POST["$inputName[$i]"];
-                    /** @noinspection PhpUndefinedMethodInspection */
-                    $numberRows = $db->execute("SELECT * FROM $table
-                                           WHERE userID = ?
-                                           AND worksID = $portionSelected", DatabaseManager::TYPE_SELECT, array($userID));
 
+                    if($inputName[$i] == "work_link")
+                    {
+                        $input = "http://";
+                        $site = filter_input(INPUT_POST, $inputName[$i], FILTER_SANITIZE_STRING);
+                        $input .=$site;
+                    }
+                    else
+                    {
+                        $input = filter_input(INPUT_POST, $inputName[$i], FILTER_SANITIZE_STRING);
+                    }
+                    
+                    $numberRows = $db->execute("SELECT * FROM $table
+                                                WHERE userID = ?
+                                                AND worksID = $portionSelected",
+                        DatabaseManager::TYPE_SELECT, array($userID));
 
                     //  Check the query based on the number of rows returned. If they are greater than zero. (Change to 1)
                     if (count($numberRows) > 0)
                     {
                         // Update the table with the column information.
-                        /** @noinspection PhpUndefinedMethodInspection */
                         $db->execute("UPDATE $table
-                                SET $columns[$i] = ?
-                                WHERE userID = ?
-                                AND worksID = $portionSelected", DatabaseManager::TYPE_UPDATE, array($input, $userID));
+                                      SET $columns[$i] = ?
+                                      WHERE userID = ?
+                                      AND worksID = $portionSelected",
+                            DatabaseManager::TYPE_UPDATE, array($input, $userID));
                     }
                     else
                     {
                         // Insert the information into the table Since no information was found in the query.
-                        /** @noinspection PhpUndefinedMethodInspection */
                         $db->execute("INSERT INTO $table (userID, worksID, $columns[$i])
-                                VALUES (?,'".$portionSelected."', ?)", DatabaseManager::TYPE_INSERT, array($userID, $input));
+                                      VALUES (?,'".$portionSelected."', ?)",
+                            DatabaseManager::TYPE_INSERT, array($userID, $input));
                     }
                 }
             }
@@ -1411,7 +1421,8 @@ function  inputValues($db, $userID, $inputName, $table, $columns, $destinationID
 
                     /** @noinspection PhpUndefinedMethodInspection */
                     $result = $db->execute("SELECT * FROM $table
-                                           WHERE userID = ?", DatabaseManager::TYPE_SELECT, array($userID));
+                                            WHERE userID = ?",
+                        DatabaseManager::TYPE_SELECT, array($userID));
 
                     //  Check the query based on the number of rows returned. If they are greater than zero. (Change to 1)
                     if (count($result) > 0)
@@ -1437,7 +1448,8 @@ function  inputValues($db, $userID, $inputName, $table, $columns, $destinationID
                             // Insert the information into the table Since no information was found in the query.
                             /** @noinspection PhpUndefinedMethodInspection */
                             $db->execute("INSERT INTO $table (userID, $columns[$i])
-                                VALUES (?, ?)", DatabaseManager::TYPE_SELECT, array($userID, $input));
+                                          VALUES (?, ?)",
+                                DatabaseManager::TYPE_SELECT, array($userID, $input));
                         }
                         catch(Exception $e)
                         {
@@ -1459,27 +1471,24 @@ function  inputValues($db, $userID, $inputName, $table, $columns, $destinationID
                     //  Clean the input.
                     $input = $_POST["$inputName[$i]"];
 
-                    /** @noinspection PhpUndefinedMethodInspection */
                     $numberRows = $db->execute("SELECT $columns[$i] FROM $table
-                                           WHERE userID = ?
-                                           AND destination_id = '" . $destinationID . "'", DatabaseManager::TYPE_SELECT, array($userID));
+                                                WHERE userID = ?
+                                                AND destination_id = '" . $destinationID . "'",
+                        DatabaseManager::TYPE_SELECT, array($userID));
 
                     //  If the number of rows returned are greater than zero, update the existing information.
                     if (count($numberRows) > 0)
                     {
-                        /** @noinspection PhpUndefinedMethodInspection */
                         $db->execute("UPDATE $table
-                                SET $columns[$i] = ?
-                                WHERE userID = ?
-                                AND destination_id = '" . $destinationID . "'", DatabaseManager::TYPE_UPDATE, array($input, $userID));
+                                      SET $columns[$i] = ?
+                                      WHERE userID = ?
+                                      AND destination_id = '" . $destinationID . "'",
+                            DatabaseManager::TYPE_UPDATE, array($input, $userID));
                     }
-
-                    //  If there are no rows returned, insert the data inputted.
                     else
                     {
-                        /** @noinspection PhpUndefinedMethodInspection */
                         $db->execute("INSERT INTO $table (userID, $columns[$i])
-                                VALUES ('" . $userID . "', '" . $input . "')");
+                                      VALUES ('" . $userID . "', '" . $input . "')", DatabaseManager::TYPE_INSERT);
                     }
                 }
             }
@@ -1761,12 +1770,29 @@ function performInsertUpdateOperations($db, $userID, $destinationID, $portionSel
  */
 function  getSkillsColumn($db, $userID, $k)
 {
-    $result = $db->execute("SELECT column_text FROM portfolio_columns
-                                                  WHERE userID =?
-                                                  AND destination_id='".$k."'", DatabaseManager::TYPE_SELECT, array($userID));
+    $result = $db->execute("SELECT column_text 
+                            FROM portfolio_columns
+                            WHERE userID =?
+                            AND destination_id='".$k."'",
+        DatabaseManager::TYPE_SELECT, array($userID));
     foreach($result as $row)
     {
         echo $row['column_text'];
+    }
+}
+
+trait GetSkillColumnText{
+    private $result = null;
+
+    function getSkillsColumn($db, $userID, $k){
+        $result = $db->execute("SELECT column_text FROM portfolio_columns
+                                                  WHERE userID =?
+                                                  AND destination_id='".$k."'",
+            DatabaseManager::TYPE_SELECT, array($userID));
+        
+        foreach($result as $row) {
+            return $row['column_text'];
+        }
     }
 }
 
@@ -2158,11 +2184,21 @@ function  getPortfoliosNavigation($db)
 function  getProfilePicturesPath($userID, $db)
 {
     $result = $db->execute("SELECT path FROM portfolio_paths
-                                WHERE userID = ?
-                                AND destination_id=36",DatabaseManager::TYPE_SELECT, array($userID));
-    foreach($result as $row)
+                            WHERE userID = ?
+                            AND destination_id=36",DatabaseManager::TYPE_SELECT, array($userID));
+
+
+
+    if(!empty($result))
     {
-        echo $row['path'];
+        foreach($result as $row)
+        {
+            echo $row['path'];
+        }
+    }
+    else
+    {
+        echo '../graphics/member_uploads/default_profile.png';
     }
 }
 
@@ -2178,7 +2214,7 @@ function  getProfilePicturesPath($userID, $db)
 function  getFNameLName($userID, $db)
 {
     $result = $db->execute("SELECT firstName,lastName FROM portfolio_profiles
-                                        WHERE userID = ?", DatabaseManager::TYPE_SELECT,array($userID));
+                            WHERE userID = ?", DatabaseManager::TYPE_SELECT,array($userID));
     foreach($result as $row)
     {
         echo $row['firstName']." ".$row['lastName'];
@@ -2326,13 +2362,6 @@ function  getAdminNavigation($db, $logged)
 function  getFooter()
 {
     ?>
-
-    <script>
-        var d     = new Date();
-        var year = d.getFullYear();
-    </script>
-
-
     <!--Footer-->
     <footer class="container navbar-fixed-bottom">
        <p id="socialMediaFooter">
@@ -2350,7 +2379,7 @@ function  getFooter()
           </a>
        </p>
        <p><a href="../faq.php">b<span>[</span>squared<span>]</span></a>  &nbsp; <span>&#9672;</span> &nbsp;
-                &copy; 2014<script>document.write("-" + year);</script> &nbsp; <span>&#9672;</span>&nbsp;
+                &copy; <span id="footerYear"></span> &nbsp; <span>&#9672;</span>&nbsp;
                 <a target="_blank " href="../privacy/b%5Bsquared%5D_privacy_policy.pdf">Privacy Policy</a>
        </p>
     </footer>
@@ -2413,7 +2442,13 @@ function  getVisitorNavigation($db)
  */
 function getOpeningSplashDBView($db)
 {
-    return $db->execute("SELECT * FROM opening_splash");
+    return $db->execute("SELECT portfolio_profiles.userID, firstName, lastName, portfolio_paths.path FROM portfolio_profiles
+                        INNER JOIN portfolio_paths
+                        ON portfolio_profiles.userID = portfolio_paths.userID
+                        WHERE firstName IS NOT NULL
+                        AND portfolio_paths.destination_id=36
+                        AND lastName IS NOT NULL
+                        ORDER BY userID");
 }
 
 /**
@@ -2481,14 +2516,13 @@ function prepareOpeningSplash($countProfiles, $profiles)
     {
         $users = [];
         echo "<div id='imgRow$i' class='row imgRow'>"; // Top Level Div Element.
+        $x = count($profiles);
 
-        $difference = MAX_COLUMNS - $countProfiles;
-        for($k = 0; $k<$difference; $k++)
-        {
+        for($x; $x>0; $x--){
             array_push($users, array_shift($profiles));
         }
+        partialPortraitRow($countProfiles, $users);
 
-        partialPortraitRow($difference, $users);
         echo "</div>"; // Close Top Level Div after return.
     }
     echo "</div>"; // Close Top Level Div after return.

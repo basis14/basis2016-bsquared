@@ -2513,14 +2513,13 @@ function prepareOpeningSplash($countProfiles, $profiles)
     {
         $users = [];
         echo "<div id='imgRow$i' class='row imgRow'>"; // Top Level Div Element.
+        $x = count($profiles);
 
-        $difference = MAX_COLUMNS - $countProfiles;
-        for($k = 0; $k<$difference; $k++)
-        {
+        for($x; $x>0; $x--){
             array_push($users, array_shift($profiles));
         }
+        partialPortraitRow($countProfiles, $users);
 
-        partialPortraitRow($difference, $users);
         echo "</div>"; // Close Top Level Div after return.
     }
     echo "</div>"; // Close Top Level Div after return.

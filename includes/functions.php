@@ -2439,7 +2439,13 @@ function  getVisitorNavigation($db)
  */
 function getOpeningSplashDBView($db)
 {
-    return $db->execute("SELECT * FROM opening_splash");
+    return $db->execute("SELECT portfolio_profiles.userID, firstName, lastName, portfolio_paths.path FROM portfolio_profiles
+                        INNER JOIN portfolio_paths
+                        ON portfolio_profiles.userID = portfolio_paths.userID
+                        WHERE firstName IS NOT NULL
+                        AND portfolio_paths.destination_id=36
+                        AND lastName IS NOT NULL
+                        ORDER BY userID");
 }
 
 /**

@@ -74,24 +74,20 @@ $logged = checkIfLoggedIn($db);
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
+    <script src="js/Bsquared.js" type="text/javascript"></script>
+
   <!-- Stops carousel from automatically changing slides ---- Move Script to JS file in future -- LM -->
   <script>
-      $(document).ready(function() {      
+      $(document).ready(function() {
          $('.carousel').carousel('pause');
 
           $("form").valid();
 
           $(".nav ul li a").each(function(){
               $(".active").removeClass("active");
-          })
+          });
       });
   </script>
-    <script>
-    function activeFunction() { 
-    var currentPage = document.getElementById('portfolioPageActive');
-       currentPage.className += ' active';
-    }
-    </script>
 
     <?php UserModules::doOverviewModule($userID, $db);?>
 </head>
@@ -103,6 +99,7 @@ $logged = checkIfLoggedIn($db);
    <div class="row">
       <img class="memberPhoto" src="<?php getProfilePicturesPath($userID, $db)?>"
            alt="<?php getFNameLName($userID, $db)?>">
+       <p id="profilePictureName"><?php getFNameLName($userID, $db)?></p>
    </div>
 </div>
 

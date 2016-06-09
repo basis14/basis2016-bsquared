@@ -341,13 +341,7 @@ class UserModules
     public static function getPageScripts()
     {
         ?>
-        <link rel="stylesheet" href="css/styles.css">
-        <link rel="icon" type="image/ico" href="favicon.ico">
-        <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <script src="http://malsup.github.com/jquery.form.js"></script>
+        
         <?php
     }
 }

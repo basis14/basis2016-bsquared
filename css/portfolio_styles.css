@@ -441,3 +441,9 @@ footer p a:hover {
 #socialMediaFooter a img:hover {
      border: 1px solid #fff;
 }
+
+#profilePictureName {
+    text-align: center;
+    font-size: x-large;
+    color: #cc9933;
+}

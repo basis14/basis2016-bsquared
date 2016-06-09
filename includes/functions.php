@@ -2184,11 +2184,21 @@ function  getPortfoliosNavigation($db)
 function  getProfilePicturesPath($userID, $db)
 {
     $result = $db->execute("SELECT path FROM portfolio_paths
-                                WHERE userID = ?
-                                AND destination_id=36",DatabaseManager::TYPE_SELECT, array($userID));
-    foreach($result as $row)
+                            WHERE userID = ?
+                            AND destination_id=36",DatabaseManager::TYPE_SELECT, array($userID));
+
+
+
+    if(!empty($result))
     {
-        echo $row['path'];
+        foreach($result as $row)
+        {
+            echo $row['path'];
+        }
+    }
+    else
+    {
+        echo '../graphics/member_uploads/default_profile.png';
     }
 }
 
@@ -2204,7 +2214,7 @@ function  getProfilePicturesPath($userID, $db)
 function  getFNameLName($userID, $db)
 {
     $result = $db->execute("SELECT firstName,lastName FROM portfolio_profiles
-                                        WHERE userID = ?", DatabaseManager::TYPE_SELECT,array($userID));
+                            WHERE userID = ?", DatabaseManager::TYPE_SELECT,array($userID));
     foreach($result as $row)
     {
         echo $row['firstName']." ".$row['lastName'];
@@ -2352,13 +2362,6 @@ function  getAdminNavigation($db, $logged)
 function  getFooter()
 {
     ?>
-
-    <script>
-        var d     = new Date();
-        var year = d.getFullYear();
-    </script>
-
-
     <!--Footer-->
     <footer class="container navbar-fixed-bottom">
        <p id="socialMediaFooter">
@@ -2376,7 +2379,7 @@ function  getFooter()
           </a>
        </p>
        <p><a href="../faq.php">b<span>[</span>squared<span>]</span></a>  &nbsp; <span>&#9672;</span> &nbsp;
-                &copy; 2014<script>document.write("-" + year);</script> &nbsp; <span>&#9672;</span>&nbsp;
+                &copy; <span id="footerYear"></span> &nbsp; <span>&#9672;</span>&nbsp;
                 <a target="_blank " href="../privacy/b%5Bsquared%5D_privacy_policy.pdf">Privacy Policy</a>
        </p>
     </footer>
